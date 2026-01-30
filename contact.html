@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bog'lanish - Umurzoq Topqonbayev Portfolio</title>
+    <meta name="description" content="Umurzoq Topqonbayev bilan bog'lanish. Email: umurzoquz08@gmail.com. Kontakt formasi orqali xabar yuboring.">
+    <meta name="keywords" content="bog'lanish, contact, email, umurzoquz08@gmail.com">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <canvas id="matrix"></canvas>
+    <div class="lang-switcher">
+        <button onclick="changeLanguage('uz')">UZ</button>
+        <button onclick="changeLanguage('en')">EN</button>
+        <button onclick="changeLanguage('ru')">RU</button>
+    </div>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html" id="nav-home">Bosh sahifa</a></li>
+                    <li><a href="about.html" id="nav-about">Men haqimda</a></li>
+                    <li><a href="skills.html" id="nav-skills">Mahoratlar</a></li>
+                    <li><a href="projects.html" id="nav-projects">Proyektlar</a></li>
+                    <li><a href="contact.html" id="nav-contact">Bog'lanish</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="contact">
+                <h2 id="contact-title">Bog'lanish</h2>
+                <p id="contact-text">Men bilan bog'lanish uchun quyidagi ma'lumotlarni ishlatishingiz mumkin. Email:
+                    umurzoquz08@gmail.com</p>
+                <form action="https://formspree.io/f/your-form-id" method="POST">
+                    <label for="name" id="name-label">Ismingiz:</label>
+                    <input type="text" id="name" name="name" required><br><br>
+                    <label for="email" id="email-label">Email:</label>
+                    <input type="email" id="email" name="email" required><br><br>
+                    <label for="message" id="message-label">Xabar:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea><br><br>
+                    <button type="submit" id="submit-btn">Yuborish</button>
+                </form>
+            </section>
+        </main>
+        <footer>
+            <div class="social-links">
+                <a href="https://www.instagram.com/umurzoq.uz" target="_blank" title="Instagram">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png" alt="Instagram">
+                </a>
+                <a href="https://t.me/topqonbayev_umurzoq" target="_blank" title="Telegram">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/telegram-app.png" alt="Telegram">
+                </a>
+                <a href="https://github.com/umurzoquz" target="_blank" title="GitHub">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/github.png" alt="GitHub">
+                </a>
+                <a href="https://www.youtube.com/@Umurzoq_uz" target="_blank" title="YouTube">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/youtube-play.png" alt="YouTube">
+                </a>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyektlar - Umurzoq Topqonbayev Portfolio</title>
+    <meta name="description" content="Umurzoq Topqonbayevning proyektlari: Portfolio Website, Task Manager App, Weather App va boshqalar.">
+    <meta name="keywords" content="proyektlar, projects, portfolio website, task manager, weather app">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <canvas id="matrix"></canvas>
+    <div class="lang-switcher">
+        <button onclick="changeLanguage('uz')">UZ</button>
+        <button onclick="changeLanguage('en')">EN</button>
+        <button onclick="changeLanguage('ru')">RU</button>
+    </div>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html" id="nav-home">Bosh sahifa</a></li>
+                    <li><a href="about.html" id="nav-about">Men haqimda</a></li>
+                    <li><a href="skills.html" id="nav-skills">Mahoratlar</a></li>
+                    <li><a href="projects.html" id="nav-projects">Proyektlar</a></li>
+                    <li><a href="contact.html" id="nav-contact">Bog'lanish</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="projects">
+                <h2 id="projects-title">Proyektlar</h2>
+                <p id="projects-text">Bu yerda mening ba'zi loyihalarimni ko'rishingiz mumkin.</p>
+                <div class="project-grid">
+                    <div class="project-card">
+                        <h3 id="project1-title">Portfolio Website</h3>
+                        <p id="project1-desc">Shaxsiy portfolyo veb-sayti. HTML, CSS, JavaScript va animatsiyalar bilan yaratilgan.</p>
+                        <a href="https://github.com/umurzoquz/portfolio" target="_blank" id="project1-github">GitHub</a> | <a href="#" target="_blank" id="project1-demo">Demo</a>
+                    </div>
+                    <div class="project-card">
+                        <h3 id="project2-title">Task Manager App</h3>
+                        <p id="project2-desc">Vazifalarni boshqarish uchun React ilovasi. Backend bilan API integratsiyasi.</p>
+                        <a href="https://github.com/umurzoquz/task-manager" target="_blank" id="project2-github">GitHub</a> | <a href="#" target="_blank" id="project2-demo">Demo</a>
+                    </div>
+                    <div class="project-card">
+                        <h3 id="project3-title">Weather App</h3>
+                        <p id="project3-desc">Ob-havo ma'lumotlarini ko'rsatuvchi Python skripti. API dan ma'lumot oladi.</p>
+                        <a href="https://github.com/umurzoquz/weather-app" target="_blank" id="project3-github">GitHub</a> | <a href="#" target="_blank" id="project3-demo">Demo</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <div class="social-links">
+                <a href="https://www.instagram.com/umurzoq.uz" target="_blank" title="Instagram">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png" alt="Instagram">
+                </a>
+                <a href="https://t.me/topqonbayev_umurzoq" target="_blank" title="Telegram">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/telegram-app.png" alt="Telegram">
+                </a>
+                <a href="https://github.com/umurzoquz" target="_blank" title="GitHub">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/github.png" alt="GitHub">
+                </a>
+                <a href="https://www.youtube.com/@Umurzoq_uz" target="_blank" title="YouTube">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/youtube-play.png" alt="YouTube">
+                </a>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
