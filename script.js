@@ -224,3 +224,44 @@ function changeLanguage(lang) {
     const ctaContact = document.getElementById('cta-contact');
     if (ctaContact) ctaContact.textContent = translations[lang].ctaContact;
 }
+
+// Responsive nav toggle
+document.addEventListener('DOMContentLoaded', function () {
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.getElementById('primary-menu');
+    if (!toggle || !menu) return;
+
+    function closeMenu() {
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function openMenu() {
+        menu.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    toggle.addEventListener('click', function (e) {
+        const isOpen = menu.classList.contains('open');
+        if (isOpen) closeMenu(); else openMenu();
+    });
+
+    // Close when clicking a link
+    menu.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A') closeMenu();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeMenu();
+    });
+
+    // Ensure menu visible on large screens
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) {
+            menu.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            menu.style.display = '';
+        }
+    });
+});
