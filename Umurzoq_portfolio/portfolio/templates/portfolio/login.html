@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - {{ name }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .login-container {
+            background: rgba(138, 43, 226, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px rgba(138, 43, 226, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #8a2be2, #00bfff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00bfff;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #00bfff;
+            box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.2);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #8a2be2, #00bfff);
+            color: #ffffff;
+            text-decoration: none;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .messages {
+            margin-bottom: 2rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-error {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .back-link a {
+            color: #00bfff;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Admin Login</h2>
+
+        {% if form.errors %}
+            <div class="messages">
+                <div class="alert alert-error">
+                    Your username and password didn't match. Please try again.
+                </div>
+            </div>
+        {% endif %}
+
+        {% if next %}
+            {% if user.is_authenticated %}
+                <div class="messages">
+                    <div class="alert alert-error">
+                        Your account doesn't have access to this page. To proceed,
+                        please login with an account that has access.
+                    </div>
+                </div>
+            {% else %}
+                <div class="messages">
+                    <div class="alert alert-error">
+                        Please login to see this page.
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Username</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Password</label>
+                {{ form.password }}
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+
+        <div class="back-link">
+            <a href="{% url 'home' %}">← Back to Portfolio</a>
+        </div>
+    </div>
+</body>
+</html>
