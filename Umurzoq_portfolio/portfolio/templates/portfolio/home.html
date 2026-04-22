@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umurzoq Topqonbayev - Cosmic Infinity Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .space {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000 100%);
+            z-index: -1;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                              radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+                              radial-gradient(1px 1px at 90px 40px, #eee, transparent);
+            background-repeat: repeat;
+            background-size: 100px 100px;
+            animation: twinkle 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .nebula {
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            width: 80%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, rgba(0, 191, 255, 0.2) 50%, transparent 100%);
+            filter: blur(50px);
+            animation: drift 20s ease-in-out infinite;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(10px) translateY(-10px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .name {
+            font-size: 4rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #fff, #00bfff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+        }
+
+        .projects {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 191, 255, 0.3);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .project-desc {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .skills {
+            margin-top: 50px;
+        }
+
+        .skill {
+            display: inline-block;
+            background: rgba(0, 191, 255, 0.2);
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 191, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="space">
+        <div class="stars"></div>
+        <div class="nebula"></div>
+    </div>
+    <div class="container">
+        <h1 class="name">{{ name }}</h1>
+        <p>Creative Developer | Deep Space Explorer</p>
+
+        <div class="projects">
+            {% for project in projects %}
+            <div class="project-card">
+                <h2 class="project-title">{{ project.title }}</h2>
+                <p class="project-desc">{{ project.description }}</p>
+                <p>Technologies: {{ project.technologies }}</p>
+                {% if project.url %}
+                <a href="{{ project.url }}">View Project</a>
+                {% endif %}
+                {% if project.github_url %}
+                <a href="{{ project.github_url }}">GitHub</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="skills">
+            <h2>Skills</h2>
+            {% for skill in skills %}
+            <span class="skill">{{ skill.name }} ({{ skill.proficiency }}%)</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        // Simple particle effect
+        const canvas = document.createElement('canvas');
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.zIndex = '-1';
+        document.body.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 2,
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
