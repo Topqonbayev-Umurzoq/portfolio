@@ -237,6 +237,16 @@ function setupEventListeners() {
     });
     
     document.getElementById('back-btn').addEventListener('click', closeProjectDetail);
+    
+    // Contact link hover effects
+    document.querySelectorAll('.contact-link').forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            document.querySelector('.contact-content').classList.add('glowing');
+        });
+        link.addEventListener('mouseleave', () => {
+            document.querySelector('.contact-content').classList.remove('glowing');
+        });
+    });
 }
 
 function onWindowResize() {
@@ -261,12 +271,14 @@ function onMouseMove(event) {
             if (targetArtifact.userData.originalScale) {
                 targetArtifact.scale.set(targetArtifact.userData.originalScale.x * 1.3, targetArtifact.userData.originalScale.y * 1.3, targetArtifact.userData.originalScale.z * 1.3);
             }
+            targetArtifact.material.emissive.setHex(0x00eaff);
             targetArtifact.material.emissiveIntensity = 0.8;
             document.body.style.cursor = 'pointer';
         } else {
             if (targetArtifact.userData.originalScale) {
                 targetArtifact.scale.copy(targetArtifact.userData.originalScale);
             }
+            targetArtifact.material.emissive.copy(targetArtifact.material.color);
             targetArtifact.material.emissiveIntensity = 0.2;
             document.body.style.cursor = 'default';
         }
@@ -309,6 +321,19 @@ function navigateToSection(section) {
     
     const targetX = [ -15, -5, 5, 15 ][section];
     animateCameraTo(targetX, 0, 20);
+    
+    // Hide project detail if open
+    if (isZoomed) {
+        closeProjectDetail();
+    }
+    
+    // Show contact detail for contact section
+    const contactDetail = document.getElementById('contact-detail');
+    if (section === 3) {
+        contactDetail.classList.add('active');
+    } else {
+        contactDetail.classList.remove('active');
+    }
 }
 
 function animateCameraTo(x, y, z) {
@@ -338,6 +363,9 @@ function animateCameraTo(x, y, z) {
 function openProjectDetail(index) {
     isZoomed = true;
     zoomedArtifact = index;
+    
+    // Hide contact detail if open
+    document.getElementById('contact-detail').classList.remove('active');
     
     const project = projectsData[index];
     
