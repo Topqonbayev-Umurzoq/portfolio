@@ -1,67 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Topqonbayev Umurzoq - Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div id="canvas-container"></div>
-    
-    <div id="hud" class="hud">
-        <div id="nav-bar" class="nav-bar">
-            <button class="nav-btn active" data-section="0">Home</button>
-            <button class="nav-btn" data-section="1">About</button>
-            <button class="nav-btn" data-section="2">Projects</button>
-            <button class="nav-btn" data-section="3">Contact</button>
-        </div>
-        <div id="secret-code" class="secret-code hidden">SUPER_SECRET_ACTIVATED</div>
-    </div>
-
-    <div id="project-detail" class="project-detail hidden">
-        <div class="project-content">
-            <button id="back-btn" class="back-btn">← Back to Projects</button>
-            <h2 id="project-title"></h2>
-            <p id="project-desc"></p>
-            <div class="tech-stack" id="project-tech"></div>
-            <div class="project-links">
-                <a id="project-demo" href="#" target="_blank" class="link-btn">Live Demo</a>
-                <a id="project-github" href="#" target="_blank" class="link-btn">GitHub</a>
-            </div>
-        </div>
-    </div>
-
-    <div id="contact-detail" class="contact-detail hidden">
-        <div class="contact-content">
-            <h2>Contact Terminal</h2>
-            <div class="contact-links">
-                <a href="mailto:Umurzoquz08@gmail.com" class="contact-link">
-                    <span class="contact-icon">📧</span>
-                    <span class="contact-text">Umurzoquz08@gmail.com</span>
-                </a>
-                <a href="https://github.com/Topqonbayev-Umurzoq" target="_blank" class="contact-link">
-                    <span class="contact-icon">🐙</span>
-                    <span class="contact-text">Topqonbayev-Umurzoq</span>
-                </a>
-                <a href="https://t.me/TOPQONBAYEV_UMURZOQ" target="_blank" class="contact-link">
-                    <span class="contact-icon">✈️</span>
-                    <span class="contact-text">@TOPQONBAYEV_UMURZOQ</span>
-                </a>
-                <a href="https://www.instagram.com/TOPQONBAYEV_UMURZOQ" target="_blank" class="contact-link">
-                    <span class="contact-icon">📸</span>
-                    <span class="contact-text">@TOPQONBAYEV_UMURZOQ</span>
-                </a>
-                <a href="https://www.youtube.com/@Umurzoq_uz" target="_blank" class="contact-link">
-                    <span class="contact-icon">📹</span>
-                    <span class="contact-text">@Umurzoq_uz</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Topqonbayev Umurzoq - Cosmic Portfolio</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Courier+Prime:wght@400;700&display=swap');
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        background: #05070d;
+        color: #00eaff;
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+        cursor: none;
+      }
+      
+      html, body, #root {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
