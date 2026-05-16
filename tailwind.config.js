@@ -1,51 +1,30 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        cosmic: {
-          dark: '#05070d',
-          blue: '#00eaff',
-          purple: '#7a5cff',
-          glow: '#00d4ff',
-          accent: '#ff006e'
-        }
-      },
-      boxShadow: {
-        'neon-blue': '0 0 20px rgba(0, 234, 255, 0.5), 0 0 40px rgba(0, 234, 255, 0.3)',
-        'neon-purple': '0 0 20px rgba(122, 92, 255, 0.5), 0 0 40px rgba(122, 92, 255, 0.3)',
-        'glow': '0 0 30px rgba(0, 212, 255, 0.6)'
+        cyan: { DEFAULT: '#00ffff' },
+        purple: { neon: '#a855f7' },
+        dark: { DEFAULT: '#000008', surface: '#050510', card: '#0a0a1a' }
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        mono: ['Courier Prime', 'monospace']
+        mono: ['"Courier New"', 'Courier', 'monospace'],
+        display: ['"Courier New"', 'monospace']
       },
       animation: {
-        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        glow: 'glow 3s ease-in-out infinite',
-        float: 'float 6s ease-in-out infinite',
-        spin_slow: 'spin 20s linear infinite',
-        scan: 'scan 3s linear infinite'
+        'float': 'float 3s ease-in-out infinite',
+        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+        'rotate-slow': 'rotate-slow 20s linear infinite',
+        'orbit': 'orbit 8s linear infinite',
       },
       keyframes: {
-        glow: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(0, 234, 255, 0.5)' },
-          '50%': { boxShadow: '0 0 40px rgba(0, 234, 255, 0.8)' }
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' }
-        },
-        scan: {
-          '0%': { top: '0%' },
-          '100%': { top: '100%' }
-        }
+        float: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-12px)' } },
+        'pulse-glow': { '0%,100%': { boxShadow: '0 0 10px #00ffff' }, '50%': { boxShadow: '0 0 30px #00ffff, 0 0 60px #00ffff' } },
+        'rotate-slow': { from: { transform: 'rotate(0deg)' }, to: { transform: 'rotate(360deg)' } },
+        'orbit': { from: { transform: 'rotate(0deg) translateX(120px) rotate(0deg)' }, to: { transform: 'rotate(360deg) translateX(120px) rotate(-360deg)' } }
       }
-    },
+    }
   },
-  plugins: [],
+  plugins: []
 }

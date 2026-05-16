@@ -1,109 +1,128 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Canvas } from '@react-three/fiber'
-import SpaceBackground from './components/SpaceBackground'
-import CustomCursor from './components/CustomCursor'
-import LoadingScreen from './components/LoadingScreen'
-import HUDBottomPanel from './components/HUDBottomPanel'
-import Hero from './components/sections/Hero'
-import About from './components/sections/About'
-import Skills from './components/sections/Skills'
-import Projects from './components/sections/Projects'
-import Contact from './components/sections/Contact'
-import { useMousePosition } from './hooks/useMousePosition'
-import { useSoundManager } from './hooks/useSoundManager'
-import './App.css'
+import { useState, useEffect, useRef } from 'react'
+import Cursor from './components/Cursor'
+import Nav from './components/Nav'
+import SectionIndicator from './components/SectionIndicator'
+import Starfield from './components/Starfield'
+import Hero from './pages/Hero'
+import About from './pages/About'
+import Skills from './pages/Skills'
+import Projects from './pages/Projects'
+import Contact from './pages/Contact'
+import { useSound } from './hooks/useSound'
 
-function App() {
-  const [currentSection, setCurrentSection] = useState(0)
-  const [isLoading, setIsLoading] = useState(true)
-  const [soundEnabled, setSoundEnabled] = useState(false)
-  const containerRef = useRef(null)
-  const { mouseX, mouseY } = useMousePosition()
-  const { playSound } = useSoundManager(soundEnabled)
+const sections = ['hero', 'about', 'skills', 'projects', 'contact']
 
+export default function App() {
+  const [activeSection, setActiveSection] = useState('hero')
+  const [soundOn, setSoundOn] = useState(false)
+  const { playHover, playClick, startAmbient } = useSound()
+  const sectionRefs = useRef({})
+
+  // Scroll-based section detection
   useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => setIsLoading(false), 3000)
-    return () => clearTimeout(timer)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.4) {
+            setActiveSection(entry.target.dataset.section)
+          }
+        })
+      },
+      { threshold: 0.4 }
+    )
+
+    sections.forEach(s => {
+      const el = document.getElementById(`section-${s}`)
+      if (el) observer.observe(el)
+    })
+
+    return () => observer.disconnect()
   }, [])
 
+  // Sound on interactive elements
   useEffect(() => {
-    const handleScroll = (e) => {
-      if (e.deltaY > 0) {
-        setCurrentSection((prev) => Math.min(prev + 1, 4))
-      } else {
-        setCurrentSection((prev) => Math.max(prev - 1, 0))
-      }
+    if (!soundOn) return
+    const addListeners = () => {
+      document.querySelectorAll('button, a, [data-hover]').forEach(el => {
+        el.addEventListener('mouseenter', playHover)
+        el.addEventListener('click', playClick)
+      })
     }
+    addListeners()
+    const interval = setInterval(addListeners, 2000)
+    return () => clearInterval(interval)
+  }, [soundOn])
 
-    const handleKeyDown = (e) => {
-      if (e.key === 'ArrowDown') {
-        setCurrentSection((prev) => Math.min(prev + 1, 4))
-      } else if (e.key === 'ArrowUp') {
-        setCurrentSection((prev) => Math.max(prev - 1, 0))
-      } else if (e.key === '1') setCurrentSection(0)
-      else if (e.key === '2') setCurrentSection(1)
-      else if (e.key === '3') setCurrentSection(2)
-      else if (e.key === '4') setCurrentSection(3)
-      else if (e.key === '5') setCurrentSection(4)
-    }
-
-    window.addEventListener('wheel', handleScroll, { passive: true })
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      window.removeEventListener('wheel', handleScroll)
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [])
-
-  if (isLoading) {
-    return <LoadingScreen />
+  const navigateTo = (id) => {
+    const el = document.getElementById(`section-${id}`)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    setActiveSection(id)
+    if (soundOn) playClick()
   }
 
-  const sections = [
-    <Hero key="hero" onStart={() => setCurrentSection(1)} playSound={playSound} />,
-    <About key="about" />,
-    <Skills key="skills" />,
-    <Projects key="projects" playSound={playSound} />,
-    <Contact key="contact" />,
-  ]
+  const toggleSound = () => {
+    const next = !soundOn
+    setSoundOn(next)
+    if (next) startAmbient()
+  }
 
   return (
-    <div ref={containerRef} className="w-full h-screen overflow-hidden bg-cosmic-dark relative">
-      {/* 3D Canvas Background */}
-      <Canvas
-        className="absolute inset-0"
-        camera={{ position: [0, 0, 5], fov: 50 }}
-      >
-        <SpaceBackground mouseX={mouseX} mouseY={mouseY} />
-      </Canvas>
+    <div style={{ background: '#000008', minHeight: '100vh', position: 'relative' }}>
+      {/* Starfield fixed background */}
+      <Starfield />
 
-      {/* Custom Cursor */}
-      <CustomCursor x={mouseX} y={mouseY} />
+      {/* Scanline overlay */}
+      <div className="scanlines" style={{
+        position: 'fixed', inset: 0, zIndex: 1, pointerEvents: 'none',
+      }} />
 
-      {/* Scan Line Effect */}
-      <div className="scan-line"></div>
+      {/* Custom cursor */}
+      <Cursor />
 
-      {/* Main Content */}
-      <div className="relative z-10 w-full h-full overflow-hidden">
-        <div className="section-enter">
-          {sections[currentSection]}
-        </div>
-      </div>
-
-      {/* HUD Bottom Panel */}
-      <HUDBottomPanel
-        currentSection={currentSection}
-        soundEnabled={soundEnabled}
-        onSoundToggle={() => {
-          setSoundEnabled(!soundEnabled)
-          playSound('toggle')
-        }}
-        onSectionChange={setCurrentSection}
+      {/* Navigation */}
+      <Nav
+        activeSection={activeSection}
+        onNavigate={navigateTo}
+        soundOn={soundOn}
+        onToggleSound={toggleSound}
       />
+
+      {/* Section indicator */}
+      <SectionIndicator active={activeSection} onNavigate={navigateTo} />
+
+      {/* Main content - scrollable sections */}
+      <main style={{ position: 'relative', zIndex: 10 }}>
+        <div id="section-hero" data-section="hero">
+          <Hero onNavigate={navigateTo} />
+        </div>
+
+        <div id="section-about" data-section="about">
+          <About />
+        </div>
+
+        <div id="section-skills" data-section="skills">
+          <Skills />
+        </div>
+
+        <div id="section-projects" data-section="projects">
+          <Projects />
+        </div>
+
+        <div id="section-contact" data-section="contact">
+          <Contact />
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer style={{
+        position: 'relative', zIndex: 10,
+        textAlign: 'center', padding: '32px 20px',
+        borderTop: '1px solid rgba(0,255,255,0.1)',
+        color: 'rgba(255,255,255,0.2)',
+        fontSize: 10, letterSpacing: 4,
+      }}>
+        ⬡ UMURZOQ TOPQONBAYEV · 2025 · FUTURISTIC DEVELOPER
+      </footer>
     </div>
   )
 }
-
-export default App
